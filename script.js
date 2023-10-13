@@ -1,30 +1,29 @@
 //your code here!
+const scrollbox = document.getElementById("infi-list");
 
-//your code here!
-// Function to add more list items
-function addMoreItems() {
-    const list = document.getElementById('infi-list');
-    const lastListItem = list.lastElementChild;
+let y =1;
+function createitem(){
+	
+    for(let i = 0; i<10 ; i++){
+        const createelement = document.createElement("li");
+        createelement.innerText= `Item ${y}`
+		scrollbox.appendChild(createelement);
+		y++;
+	}
+}
 
-    for (let i = 1; i <= 2; i++) {
-        const newItem = document.createElement('li');
-        newItem.textContent = `List Item ${list.childElementCount + i}`;
-        list.appendChild(newItem);
+
+function addmoreelements(){
+    const totolscroll = scrollbox.scrollTop;
+    const maxscroll = scrollbox.scrollHeight - scrollbox.clientHeight;
+    const threshold = maxscroll-totolscroll;
+    if(threshold<=5){
+        for(let i = 0; i<2; i++){
+            createitem();
+        }
     }
 }
 
-// Event listener to detect when the user scrolls to the end of the list
-document.addEventListener('scroll', function () {
-    const list = document.getElementById('infi-list');
-    const lastListItem = list.lastElementChild;
-    const lastItemOffset = lastListItem.offsetTop + lastListItem.clientHeight;
-    const pageOffset = window.pageYOffset + window.innerHeight;
+createitem();
 
-    if (pageOffset > lastItemOffset - 20) {
-        // Load more items when the user is near the end of the list
-        addMoreItems();
-    }
-});
-
-// Initially add about 10 list items
-addMoreItems();
+scrollbox.addEventListener("scroll" , addmoreelements)
